@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">AndroidProject</string>
+    <string name="display_text">display_text</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="enter_you_passworld">enter you passworld</string>
+    <string name="enter_your_password" />
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
