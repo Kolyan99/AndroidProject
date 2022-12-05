@@ -10,4 +10,5 @@
     <string name="date">date</string>
     <string name="imageView">imageView</string>
     <string name="OnBoarding">Onboarding</string>
+    <string name="imageview_clicked">\" ImageView clicked\"</string>
 </resources>
