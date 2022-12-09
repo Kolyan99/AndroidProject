@@ -3,7 +3,7 @@ package com.example.androidproject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.androidproject.adapter.model.ItemsModel
+import com.example.androidproject.presentation.adapter.model.ItemsModel
 
 class ItemsViewModel: ViewModel() {
 
