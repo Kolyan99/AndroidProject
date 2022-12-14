@@ -11,4 +11,5 @@
     <string name="imageView">imageView</string>
     <string name="OnBoarding">Onboarding</string>
     <string name="imageview_clicked">\" ImageView clicked\"</string>
+    <string name="called">called</string>
 </resources>

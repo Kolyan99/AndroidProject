@@ -1,12 +1,12 @@
-package com.example.androidproject.adapter
+package com.example.androidproject.presentation.view.view.adapter
 
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidproject.R
-import com.example.androidproject.adapter.model.ItemsModel
-import com.example.androidproject.listener.ItemListener
+import com.example.androidproject.presentation.view.view.adapter.model.ItemsModel
+import com.example.androidproject.presentation.view.view.adapter.listener.ItemListener
 
 class ItemsViewHolder( private val view: View, private val itemsListener: ItemListener
 ): RecyclerView.ViewHolder(view) {

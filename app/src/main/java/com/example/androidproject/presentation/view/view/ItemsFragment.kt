@@ -1,4 +1,4 @@
-package com.example.androidproject
+package com.example.androidproject.presentation.view.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,24 +7,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.androidproject.BundelConstants.IMAGE_VIEW
-import com.example.androidproject.adapter.ItemsAdapter
-import com.example.androidproject.adapter.model.ItemsModel
-import com.example.androidproject.listener.ItemListener
+import com.example.androidproject.utils.BundelConstants.IMAGE_VIEW
+import com.example.androidproject.R
+import com.example.androidproject.presentation.view.view.adapter.ItemsAdapter
+import com.example.androidproject.presentation.view.view.adapter.listener.ItemListener
+import com.example.androidproject.utils.BundelConstants.DATA
+import com.example.androidproject.utils.BundelConstants.NAME
 
-//not use
-//const val NAME = "name"
 
 class ItemsFragment : Fragment(), ItemListener {
 
     private lateinit var itemsAdapter: ItemsAdapter
 
-    private val viewModel: ItemsViewModel by viewModels()
+    private val viewModel: ItemsViewModel by viewModels {
+        ItemsViewModelFactory(TestParametr())
+    }
 
-    //  private val itemsAdapter2: ItemsAdapter = ItemsAdapter()// так делать можно, но не нужно)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,7 +55,7 @@ class ItemsFragment : Fragment(), ItemListener {
         }
 
         viewModel.bundel.observe(viewLifecycleOwner) { navBundle ->
-            if(navBundle != null){
+            if (navBundle != null) {
                 val detailsFragment = DetailsFragment()
                 val bundle = Bundle()
                 bundle.putString(NAME, navBundle.name)
@@ -63,7 +63,7 @@ class ItemsFragment : Fragment(), ItemListener {
                 bundle.putInt(IMAGE_VIEW, navBundle.image)
                 detailsFragment.arguments = bundle
 
-                Toast.makeText(context, "called", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.called), Toast.LENGTH_SHORT).show()
 
                 parentFragmentManager
                     .beginTransaction()
@@ -82,12 +82,5 @@ class ItemsFragment : Fragment(), ItemListener {
 
     override fun onElementSelected(name: String, date: String, imageView: Int) {
         viewModel.elementClicked(name, date, imageView)
-    }
-
-
-    companion object {
-        // we can use it, because we see where we get it
-        const val DATA = "data"
-        const val NAME = "name"
     }
 }

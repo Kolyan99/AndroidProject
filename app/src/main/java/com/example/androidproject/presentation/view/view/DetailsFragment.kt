@@ -1,15 +1,16 @@
-package com.example.androidproject
+package com.example.androidproject.presentation.view.view
 
 import android.os.Bundle
-import android.provider.ContactsContract.Intents.Insert.DATA
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.androidproject.BundelConstants.IMAGE_VIEW
-import com.example.androidproject.ItemsFragment.Companion.NAME
+import com.example.androidproject.utils.BundelConstants.IMAGE_VIEW
+import com.example.androidproject.R
+import com.example.androidproject.utils.BundelConstants.DATA
+import com.example.androidproject.utils.BundelConstants.NAME
 
 
 class DetailsFragment : Fragment() {
@@ -32,7 +33,7 @@ class DetailsFragment : Fragment() {
         val bundel = arguments
         bundel?.let { safeBundlt ->
             val name = bundel.getString(NAME)
-            val date = bundel.getString(ItemsFragment.Companion.DATA)
+            val date = bundel.getString(DATA)
             val image = bundel.getInt(IMAGE_VIEW)
 
             detailsName.text = name
