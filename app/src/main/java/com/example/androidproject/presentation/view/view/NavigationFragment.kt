@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.androidproject.R
 
-class NavigationFragment {
+object NavigationFragment {
 
     fun Repit(parentFragmentManager: FragmentManager, fragment: Fragment){
         parentFragmentManager

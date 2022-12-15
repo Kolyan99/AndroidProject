@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name = "viewModel"
+            type = "com.example.androidproject.presentation.view.view.dataBinding.LoginViewModel"/>
+        <variable
+            name="viewHandler"
+            type="com.example.androidproject.presentation.view.view.dataBinding.LoginFragment.ViewHandler" />
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.view.view.dataBinding.LoginFragment">
+
+    <EditText
+        android:id="@+id/edt_userName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Login name"
+        android:text="@={viewModel.userName}"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.225" />
+
+    <EditText
+        android:id="@+id/edt_userPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:text="@={viewModel.userPassword}"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/edt_userName"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/edt_userName"
+        app:layout_constraintVertical_bias="0.217" />
+
+    <Button
+        android:id="@+id/btn_Login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="344dp"
+        android:text="Show Creads"
+        android:onClick="@{()-> viewModel.showCreds()}"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_userPassword"
+        app:layout_constraintVertical_bias="0.729" />
+
+    <TextView
+        android:id="@+id/text_View"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:gravity="center_horizontal"
+        android:text="@={viewModel.userCreds}"
+        app:layout_constraintBottom_toTopOf="@+id/edt_userName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_goOnBoarding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Go to Onboarding"
+        android:onClick="@{()-> viewHandler.goToTheOnBoarding()"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.697" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
