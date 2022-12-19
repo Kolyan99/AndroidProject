@@ -15,15 +15,15 @@ import com.example.androidproject.presentation.view.view.adapter.ItemsAdapter
 import com.example.androidproject.presentation.view.view.adapter.listener.ItemListener
 import com.example.androidproject.utils.BundelConstants.DATA
 import com.example.androidproject.utils.BundelConstants.NAME
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ItemsFragment : Fragment(), ItemListener {
 
     private lateinit var itemsAdapter: ItemsAdapter
 
-    private val viewModel: ItemsViewModel by viewModels {
-        ItemsViewModelFactory(TestParametr())
-    }
+    private val viewModel: ItemsViewModel by viewModels()
+
 
 
     override fun onCreateView(

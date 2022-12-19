@@ -3,8 +3,10 @@ package com.example.androidproject.data
 import com.example.androidproject.R
 import com.example.androidproject.domain.ItemsRepository
 import com.example.androidproject.presentation.view.view.adapter.model.ItemsModel
+import javax.inject.Inject
 
-class ItemsRepositoryGet: ItemsRepository {
+class ItemsRepositoryIml @Inject constructor(): ItemsRepository {
+
 
     override fun getData(): List<ItemsModel> {
         val listItems = listOf<ItemsModel>(

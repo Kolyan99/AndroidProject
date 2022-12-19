@@ -4,10 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.androidproject.R
+import com.example.androidproject.domain.ItemsInteractor
 import com.example.androidproject.presentation.view.view.adapter.model.ItemsModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ItemsViewModel(
+@HiltViewModel
+class ItemsViewModel @Inject constructor(
     private val testParametr: TestParametr,
+    private val itemsInteractor: ItemsInteractor
 ) : ViewModel(
 ) {
 
