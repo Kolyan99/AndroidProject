@@ -1,4 +1,4 @@
-package com.example.androidproject.presentation.view.view
+package com.example.androidproject.utils
 
 import android.provider.Settings.System.getString
 import androidx.fragment.app.Fragment

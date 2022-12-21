@@ -1,8 +1,8 @@
-package com.example.androidproject.data
+package com.example.androidproject.data.items
 
 import com.example.androidproject.R
-import com.example.androidproject.domain.ItemsRepository
-import com.example.androidproject.presentation.view.view.adapter.model.ItemsModel
+import com.example.androidproject.domain.items.ItemsRepository
+import com.example.androidproject.domain.model.ItemsModel
 import javax.inject.Inject
 
 class ItemsRepositoryIml @Inject constructor(): ItemsRepository {

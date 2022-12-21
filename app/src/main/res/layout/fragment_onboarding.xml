@@ -7,7 +7,7 @@
 <data>
 <variable
     name = "viewModel"
-    type = "com.example.androidproject.presentation.view.view.OnBoardingViewModel"/>
+    type = "com.example.androidproject.presentation.view.view.auth.OnBoardingViewModel"/>
 </data>
 
 <LinearLayout

@@ -1,4 +1,4 @@
-package com.example.androidproject.presentation.view.view
+package com.example.androidproject.presentation.view.view.auth.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

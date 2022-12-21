@@ -1,11 +1,11 @@
-package com.example.androidproject.presentation.view.view
+package com.example.androidproject.presentation.view.view.auth.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.androidproject.R
-import com.example.androidproject.domain.ItemsInteractor
-import com.example.androidproject.presentation.view.view.adapter.model.ItemsModel
+import com.example.androidproject.domain.items.ItemsInteractor
+import com.example.androidproject.domain.model.ItemsModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

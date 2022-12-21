@@ -1,4 +1,4 @@
-package com.example.androidproject.presentation.view.view
+package com.example.androidproject.presentation.view.view.auth
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.example.androidproject.R
 import com.example.androidproject.databinding.FragmentOnboardingBinding
+import com.example.androidproject.presentation.view.view.auth.home.ItemsFragment
 
 
 class OnBoardingFragment : Fragment() {
