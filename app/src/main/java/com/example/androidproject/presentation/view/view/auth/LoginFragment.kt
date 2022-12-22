@@ -8,17 +8,22 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.example.androidproject.R
 import com.example.androidproject.databinding.FragmentLoginBinding
+import com.example.androidproject.presentation.view.view.LoginPresenter
+import com.example.androidproject.presentation.view.view.LoginView
 import com.example.androidproject.utils.NavigationFragment.Repit
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class LoginFragment : Fragment() {
+class LoginFragment : Fragment(), LoginView {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: LoginViewModel by viewModels()
+    @Inject
+    lateinit var loginPresenter: LoginPresenter
+
 
 
     override fun onCreateView(
@@ -32,22 +37,24 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        loginPresenter.setView(this)
+
         binding.btnShowCreads.setOnClickListener {
-            viewModel.loginUser(
+            loginPresenter.loginUser(
                 binding.edtUserName.text.toString(),
-                binding.edtUserName.text.toString()
+                binding.edtUserPassword.text.toString()
             )
         }
-        viewModel.nav.observe(viewLifecycleOwner){
-            //Repit(parentFragmentManager, OnBoardingFragment())
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.activity_container, HomeFragment())
-                .commit()
-        }
+    }
 
-
+    override fun userLoggedIn() {
+        //Repit(parentFragmentManager, OnBoardingFragment())
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.activity_container, HomeFragment())
+            .commit()
     }
 }
+
 
 
 

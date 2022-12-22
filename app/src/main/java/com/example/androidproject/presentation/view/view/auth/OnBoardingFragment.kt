@@ -8,38 +8,44 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.example.androidproject.R
 import com.example.androidproject.databinding.FragmentOnboardingBinding
+import com.example.androidproject.presentation.view.view.OnBoardingPresenter
+import com.example.androidproject.presentation.view.view.OnBoardingView
 import com.example.androidproject.presentation.view.view.auth.home.ItemsFragment
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+
+@AndroidEntryPoint
+class OnBoardingFragment : Fragment(), OnBoardingView {
 
 
-class OnBoardingFragment : Fragment() {
-
-    private val viewModel: OnBoardingViewModel by viewModels()
     private var _binding: FragmentOnboardingBinding? = null
     private val binding: FragmentOnboardingBinding get() = _binding!!
+
+    @Inject
+    lateinit var onBoardingPresenter: OnBoardingPresenter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        _binding = FragmentOnboardingBinding.inflate(inflater, container,false)
+        _binding = FragmentOnboardingBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
+        onBoardingPresenter.setView(this)
 
-        viewModel.nav.observe(viewLifecycleOwner){
-            if(it!=null){
-                parentFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.activity_container, ItemsFragment())
-                    .commit()
-                viewModel.finishPerformed()
-            }
+        binding.btnFinish.setOnClickListener {
+            onBoardingPresenter.goToItemsFragment()
         }
+    }
+
+    override fun goToItemsFragment() {
+        parentFragmentManager
+            .beginTransaction()
+            .replace(R.id.activity_container, ItemsFragment())
+            .commit()
     }
 }
