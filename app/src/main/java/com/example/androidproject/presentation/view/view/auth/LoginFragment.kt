@@ -39,7 +39,6 @@ class LoginFragment : Fragment() {
             )
         }
         viewModel.nav.observe(viewLifecycleOwner){
-            //Repit(parentFragmentManager, OnBoardingFragment())
             parentFragmentManager.beginTransaction()
                 .replace(R.id.activity_container, HomeFragment())
                 .commit()

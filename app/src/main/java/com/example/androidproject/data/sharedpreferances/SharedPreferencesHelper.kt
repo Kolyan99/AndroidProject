@@ -1,4 +1,4 @@
-package com.example.androidproject.domain.sharedpreferances
+package com.example.androidproject.data.sharedpreferances
 
 import android.content.SharedPreferences
 import com.example.androidproject.domain.model.UserModel

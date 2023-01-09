@@ -6,7 +6,7 @@ import com.example.androidproject.data.auth.AuthRepositoryImpl
 import com.example.androidproject.data.items.ItemsRepositoryIml
 import com.example.androidproject.domain.auth.AuthRepository
 import com.example.androidproject.domain.items.ItemsRepository
-import com.example.androidproject.domain.sharedpreferances.SharedPreferencesHelper
+import com.example.androidproject.data.sharedpreferances.SharedPreferencesHelper
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -31,13 +31,14 @@ abstract class DataModule {
        authRepositoryImpl: AuthRepositoryImpl
     ): AuthRepository
 
+
     companion object{
         private const val SP_KEY = "SP_KEY"
 
         @Provides
         fun provideSharedPreferences(
             @ApplicationContext context: Context
-        ): SharedPreferencesHelper{
+        ): SharedPreferencesHelper {
             return SharedPreferencesHelper(
                 context.getSharedPreferences(SP_KEY, MODE_PRIVATE)
 
