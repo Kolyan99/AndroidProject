@@ -6,9 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.androidproject.R
 import com.example.androidproject.databinding.FragmentLoginBinding
-import com.example.androidproject.utils.NavigationFragment.Repit
+import com.example.androidproject.utils.NavHelp.navigateWithDeleteBackStack
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -39,12 +40,14 @@ class LoginFragment : Fragment() {
             )
         }
         viewModel.nav.observe(viewLifecycleOwner){
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.activity_container, HomeFragment())
-                .commit()
+            if(it!=null){
+                navigateWithDeleteBackStack(
+                    it.destinationId,
+                    it.removeFragment
+                )
+                viewModel.userNavigate()
+            }
         }
-
-
     }
 }
 

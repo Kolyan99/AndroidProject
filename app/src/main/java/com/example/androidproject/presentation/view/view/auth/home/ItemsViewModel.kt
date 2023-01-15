@@ -11,7 +11,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ItemsViewModel @Inject constructor(
-    private val testParametr: TestParametr,
     private val itemsInteractor: ItemsInteractor
 ) : ViewModel(
 ) {
@@ -27,6 +26,8 @@ class ItemsViewModel @Inject constructor(
 
     fun getData() {
         val listItems = listOf<ItemsModel>()
+        _items.value = listItems
+
     }
 
     fun imageViewClicked() {
@@ -38,7 +39,8 @@ class ItemsViewModel @Inject constructor(
         _bundle.value = NavigateWithBundel(
             name = name,
             data = date,
-            image = imageView
+            image = imageView,
+            destinationId = R.id.action_itemsFragment_to_detailsFragment
         )
     }
 
@@ -50,9 +52,10 @@ class ItemsViewModel @Inject constructor(
 data class NavigateWithBundel(
     val image: Int,
     val name: String,
-    val data: String
+    val data: String,
+    val destinationId: Int
 )
 
-class TestParametr()
+
 
 

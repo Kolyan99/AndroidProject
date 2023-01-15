@@ -21,7 +21,7 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindItemsRepository(
-
+        itemsRepositoryIml: ItemsRepositoryIml
     ): ItemsRepository
 
 

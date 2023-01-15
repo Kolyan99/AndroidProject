@@ -1,4 +1,4 @@
-package com.example.androidproject.presentation.view.view.adapter.listener
+package com.example.androidproject.presentation.view.view.auth.home.adapter.listener
 
 import android.widget.ImageView
 import java.util.Date

@@ -4,10 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.activity.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import com.example.androidproject.R
 import com.example.androidproject.databinding.ActivityMainBinding
-import com.example.androidproject.presentation.view.view.auth.HomeFragment
-import com.example.androidproject.presentation.view.view.auth.LoginFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,6 +17,8 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
 
+    private lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
@@ -24,15 +26,15 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.checkUserExists()
 
-        viewModel.userExsits.observe(this){
-            val fragmentTransaction = supportFragmentManager.beginTransaction()//полезно для дз(вложенность)
-            fragmentTransaction.add(R.id.activity_container,
-                when(it){
-                    true -> HomeFragment()
-                    false ->LoginFragment()
-                }
-            )
-            fragmentTransaction.commit()
+        val navHostFragment = supportFragmentManager.findFragmentById(
+            R.id.fragmentContainerView
+        ) as NavHostFragment
+
+        navController = navHostFragment.navController
+
+
+        viewModel.userExsits.observe(this) {
+            navController.setGraph(it)
         }
     }
 }
