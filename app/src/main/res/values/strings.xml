@@ -12,4 +12,6 @@
     <string name="OnBoarding">Onboarding</string>
     <string name="imageview_clicked">\" ImageView clicked\"</string>
     <string name="called">called</string>
+    <string name="home_fragment">Home Fragment</string>
+    <string name="items_fragment">Items Fragment</string>
 </resources>
