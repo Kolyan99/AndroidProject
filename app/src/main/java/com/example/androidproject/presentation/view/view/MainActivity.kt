@@ -45,24 +45,13 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 
         binding.bottomNavigation.setupWithNavController(navController)
 
-        val btnav = AppBarConfiguration(
-            setOf(R.id.onBoardingFragment, R.id.itemsFragment)
-        )
-
-        NavigationUI.setupActionBarWithNavController(this, navController, btnav)
-
-
         viewModel.userExsits.observe(this) {
             navController.graph = getNavGraph()
       }
 
-
-
         viewModel.visibility.observe(this){
             binding.bottomNavigation.visibility = it
         }
-
-
     }
 
     private fun getNavGraph(): NavGraph{

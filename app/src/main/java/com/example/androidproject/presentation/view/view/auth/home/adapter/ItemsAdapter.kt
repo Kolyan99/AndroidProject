@@ -14,7 +14,9 @@ class ItemsAdapter(
     private var listItems = mutableListOf<ItemsModel>()
 
     fun submitList(list: List<ItemsModel>){
+        this.listItems.clear()
         this.listItems = list.toMutableList()
+        this.notifyDataSetChanged()
     }
 
 

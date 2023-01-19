@@ -3,10 +3,12 @@ package com.example.androidproject.presentation.view.view.auth.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.androidproject.R
 import com.example.androidproject.domain.items.ItemsInteractor
 import com.example.androidproject.domain.model.ItemsModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,10 +26,18 @@ class ItemsViewModel @Inject constructor(
     private val _bundle = MutableLiveData<NavigateWithBundel?>()
     val bundel: LiveData<NavigateWithBundel?> = _bundle
 
-    fun getData() {
-        val listItems = listOf<ItemsModel>()
-        _items.value = listItems
+    private val _error = MutableLiveData<String>()
+    val error: LiveData<String> = _error
 
+    fun getData() {
+        viewModelScope.launch {
+            try {
+                val listItems = itemsInteractor.getData()
+                _items.value = listItems
+            }catch (e: Exception){
+                _error.value = e.message.toString()
+            }
+        }
     }
 
     fun imageViewClicked() {
@@ -35,12 +45,9 @@ class ItemsViewModel @Inject constructor(
 
     }
 
-    fun elementClicked(name: String, date: String, imageView: Int) {
+    fun elementClicked(description: String, image: String) {
         _bundle.value = NavigateWithBundel(
-            name = name,
-            data = date,
-            image = imageView,
-            destinationId = R.id.action_itemsFragment_to_detailsFragment
+            description, image, R.id.action_itemsFragment_to_detailsFragment
         )
     }
 
@@ -50,9 +57,8 @@ class ItemsViewModel @Inject constructor(
 }
 
 data class NavigateWithBundel(
-    val image: Int,
-    val name: String,
-    val data: String,
+    val description: String,
+    val image: String,
     val destinationId: Int
 )
 

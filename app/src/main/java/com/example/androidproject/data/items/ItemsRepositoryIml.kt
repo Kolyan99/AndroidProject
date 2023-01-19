@@ -1,45 +1,28 @@
 package com.example.androidproject.data.items
 
 import com.example.androidproject.R
+import com.example.androidproject.data.ApiService
 import com.example.androidproject.domain.items.ItemsRepository
 import com.example.androidproject.domain.model.ItemsModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class ItemsRepositoryIml @Inject constructor(): ItemsRepository {
+class ItemsRepositoryIml @Inject constructor(
+    private val apiService: ApiService
+): ItemsRepository {
 
 
-    override fun getData(): List<ItemsModel> {
-        val listItems = listOf<ItemsModel>(
-            ItemsModel(
-                R.drawable.fruit,
-                "Android",
-                "26.02.2023"),
-            ItemsModel(
-                R.drawable.fruit,
-                "C++",
-                "26.02.2023"),
-            ItemsModel(
-                R.drawable.img,
-                "C",
-                "26.02.2024"),
-            ItemsModel(
-                R.drawable.img_1,
-                "Java",
-                "26.02.2026"),
-            ItemsModel(
-                R.drawable.fruit,
-                "IOS",
-                "26.04.2020"),
-            ItemsModel(
-                R.drawable.fruit,
-                "PHP",
-                "26.02.2023"),
-            ItemsModel(
-                R.drawable.fruit,
-                "JS",
-                "22.02.2021")
-        )
-        return listItems
+    override suspend fun getData(): List<ItemsModel> {
+        return withContext(Dispatchers.IO){
+            val response = apiService.getData()
+            response.body()?.sampleList?.let {
+                it.map {
+                    ItemsModel(it.description, it.imageUrl)
+                }
+            }?: kotlin.run {
+                emptyList()
+            }
+        }
     }
-
 }

@@ -1,20 +1,20 @@
 package com.example.androidproject.presentation.view.view.auth.home
 
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.androidproject.utils.BundelConstants.IMAGE_VIEW
 import com.example.androidproject.R
 import com.example.androidproject.databinding.FragmentDetailsBinding
-import com.example.androidproject.utils.BundelConstants.DATA
-import com.example.androidproject.utils.BundelConstants.NAME
-import com.example.androidproject.utils.NavHelp.replaceGraph
+import com.example.androidproject.utils.BundelConstants.description
+import com.example.androidproject.utils.BundelConstants.image
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,19 +37,13 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val detailsName = view.findViewById<TextView>(R.id.tv_name)
-        val detailsDate = view.findViewById<TextView>(R.id.tv_date)
-        val detailsImage = view.findViewById<ImageView>(R.id.detailsImage)
-
         val bundel = arguments
         bundel?.let { safeBundlt ->
-            val name = safeBundlt.getString(NAME)
-            val date = safeBundlt.getString(DATA)
-            val image = safeBundlt.getInt(IMAGE_VIEW)
+            val name = safeBundlt.getString(description)
+            val date = safeBundlt.getString(image)
 
-            detailsName.text = name
-            detailsDate.text = date
-            detailsImage.setBackgroundResource(image)
+            binding.detailsName.text = description
+            Picasso.get().load(Uri.parse(image)).into(binding.detailsImage)
         }
 
         binding.btnLogout.setOnClickListener {
