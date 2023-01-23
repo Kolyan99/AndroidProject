@@ -78,5 +78,9 @@ class ItemsFragment : Fragment(), ItemListener {
         viewModel.elementClicked(description, image)
     }
 
+    override fun onDeleteClicked(description: String) {
+        viewModel.deleteItem(description)
+    }
+
 
 }

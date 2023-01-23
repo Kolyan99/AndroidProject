@@ -14,4 +14,5 @@
     <string name="called">called</string>
     <string name="home_fragment">Home Fragment</string>
     <string name="items_fragment">Items Fragment</string>
+    <string name="search_fragment">Search Fragment</string>
 </resources>

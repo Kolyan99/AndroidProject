@@ -6,7 +6,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidproject.R
-import com.example.androidproject.databinding.ItemsFruitBinding
 import com.example.androidproject.domain.model.ItemsModel
 import com.example.androidproject.presentation.view.view.auth.home.adapter.listener.ItemListener
 import com.squareup.picasso.Picasso
@@ -21,7 +20,8 @@ class ItemsViewHolder(
     fun bind(itemsModel: ItemsModel) {
         val name = view.findViewById<TextView>(R.id.tv_name)
         val imageView = view.findViewById<ImageView>(R.id.iv_image)
-        val date = view.findViewById<TextView>(R.id.tv_date)
+        val deleteView = view.findViewById<ImageView>(R.id.delete)
+
 
         Picasso.get().load(Uri.parse(itemsModel.image)).into(imageView)
 
@@ -43,6 +43,11 @@ class ItemsViewHolder(
 
             )
         }
+        imageView.setOnClickListener {
+            itemsListener.onDeleteClicked(itemsModel.description)
+        }
+
+
 
     }
 }

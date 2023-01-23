@@ -1,0 +1,24 @@
+package com.example.androidproject.di
+
+import android.content.Context
+import com.example.androidproject.data.dataBase.Dao.ItemsDao
+import com.example.androidproject.data.dataBase.Dao.ItemsDatabase
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+
+@Module
+@InstallIn(SingletonComponent::class)
+class DataBaseModule {
+
+    @Provides
+    fun provideItemsDao(itemsDatabase: ItemsDatabase): ItemsDao{
+        return itemsDatabase.getItemsDAO()
+    }
+
+    @Provides
+    fun itemsDatabase(context: Context): ItemsDatabase{
+        return ItemsDatabase.getItemsDatabaseInstance(context)
+    }
+}

@@ -32,9 +32,10 @@ class ItemsViewModel @Inject constructor(
     fun getData() {
         viewModelScope.launch {
             try {
-                val listItems = itemsInteractor.getData()
+                itemsInteractor.getData()
+                val listItems = itemsInteractor.showData()
                 _items.value = listItems
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 _error.value = e.message.toString()
             }
         }
@@ -49,6 +50,12 @@ class ItemsViewModel @Inject constructor(
         _bundle.value = NavigateWithBundel(
             description, image, R.id.action_itemsFragment_to_detailsFragment
         )
+    }
+
+    fun deleteItem(description: String){
+        viewModelScope.launch {
+            itemsInteractor.deleteItemByDescription(description)
+        }
     }
 
     fun userNavigated() {
