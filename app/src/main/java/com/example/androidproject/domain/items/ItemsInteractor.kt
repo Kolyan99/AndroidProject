@@ -1,5 +1,6 @@
 package com.example.androidproject.domain.items
 
+import com.example.androidproject.domain.model.FavoritesModel
 import com.example.androidproject.domain.model.ItemsModel
 import javax.inject.Inject
 
@@ -22,4 +23,14 @@ class ItemsInteractor @Inject constructor(
     suspend fun findItem(searchText: String): ItemsModel{
         return itemsRepository.findItemByDescription(searchText)
     }
+
+    suspend fun onFavClicked(description: String){
+        val foundItems = itemsRepository.findItemByDescription(description)
+        itemsRepository.favClicked(foundItems)
+    }
+
+    suspend fun getFavorites(): List<FavoritesModel>{
+        return itemsRepository.getFavorites()
+    }
+
 }

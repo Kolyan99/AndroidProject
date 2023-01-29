@@ -1,4 +1,4 @@
-package com.example.androidproject.presentation.view.view.auth.home
+package com.example.androidproject.presentation.view.view.auth.home.items
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -80,6 +80,10 @@ class ItemsFragment : Fragment(), ItemListener {
 
     override fun onDeleteClicked(description: String) {
         viewModel.deleteItem(description)
+    }
+
+    override fun onFavClicked(description: String) {
+        viewModel.onFavClicked(description)
     }
 
 

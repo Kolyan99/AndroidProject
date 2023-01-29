@@ -1,4 +1,4 @@
-package com.example.androidproject.presentation.view.view.auth.home
+package com.example.androidproject.presentation.view.view.auth.home.items
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

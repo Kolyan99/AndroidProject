@@ -41,7 +41,7 @@
 
         <ImageView
             android:id="@+id/delete"
-            android:background="@drawable/ic_delete"
+            android:background="@drawable/ic_baseline_heart_broken_24"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginEnd="16dp"
@@ -49,17 +49,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.555" />
-
-        <ImageView
-            android:id="@+id/btnFav"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/ic_add_fav"
-            app:layout_constraintEnd_toStartOf="@+id/delete"
-            app:layout_constraintHorizontal_bias="0.581"
-            app:layout_constraintStart_toEndOf="@+id/tv_name"
-            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

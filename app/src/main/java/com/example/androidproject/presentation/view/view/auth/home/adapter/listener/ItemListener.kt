@@ -10,4 +10,6 @@ interface ItemListener {
     fun onElementSelected( description: String, image: String)
 
     fun onDeleteClicked(description: String)
+
+    fun onFavClicked(description: String)
 }

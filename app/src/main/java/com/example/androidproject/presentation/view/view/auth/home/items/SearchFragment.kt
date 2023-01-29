@@ -1,4 +1,4 @@
-package com.example.androidproject.presentation.view.view.auth.home
+package com.example.androidproject.presentation.view.view.auth.home.items
 
 import android.net.Uri
 import android.os.Bundle
@@ -8,8 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
-import com.example.androidproject.R
-import com.example.androidproject.databinding.FragmentLoginBinding
 import com.example.androidproject.databinding.FragmentSearchBinding
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint

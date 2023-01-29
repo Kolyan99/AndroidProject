@@ -1,5 +1,6 @@
-package com.example.androidproject.presentation.view.view.auth.home
+package com.example.androidproject.presentation.view.view.auth.home.items
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,15 +16,19 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val itemsInteractor: ItemsInteractor
-): ViewModel() {
+) : ViewModel() {
 
     private val _items = MutableLiveData<ItemsModel>()
     val item: LiveData<ItemsModel> = _items
 
-    fun findItem(searchText: String){
+    fun findItem(searchText: String) {
         viewModelScope.launch {
-            val foundItems = itemsInteractor.findItem(searchText)
-            _items.value = foundItems
-        }
+            try {
+                val foundItems = itemsInteractor.findItem(searchText)
+                _items.value = foundItems
+            } catch (e: Exception) {
+                Log.w("exception", e.toString())
+            }
         }
     }
+}

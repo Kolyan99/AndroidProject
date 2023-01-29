@@ -1,4 +1,4 @@
-package com.example.androidproject.presentation.view.view.auth.home
+package com.example.androidproject.presentation.view.view.auth.home.items
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -55,6 +55,12 @@ class ItemsViewModel @Inject constructor(
     fun deleteItem(description: String){
         viewModelScope.launch {
             itemsInteractor.deleteItemByDescription(description)
+        }
+    }
+
+    fun onFavClicked(description: String){
+        viewModelScope.launch {
+            itemsInteractor.onFavClicked(description)
         }
     }
 
