@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidproject.R
@@ -16,6 +17,7 @@ import com.example.androidproject.utils.BundelConstants.description
 import com.example.androidproject.utils.BundelConstants.image
 import com.example.androidproject.utils.NavHelp.navigateWithBundle
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.catch
 
 @AndroidEntryPoint
 class ItemsFragment : Fragment(), ItemListener {
@@ -39,11 +41,40 @@ class ItemsFragment : Fragment(), ItemListener {
         recucleView.layoutManager = LinearLayoutManager(context)
         recucleView.adapter = itemsAdapter
 
-        viewModel.getData()
 
-        viewModel.items.observe(viewLifecycleOwner) { listItems ->
-            itemsAdapter.submitList(listItems)
+
+//        viewModel.items.observe(viewLifecycleOwner) { listItems ->
+//            itemsAdapter.submitList(listItems)
+//        }
+
+        // Способ 1
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+          //  viewModel.getData.collect()
         }
+
+        // Способ 2
+        viewModel.getData()
+        viewModel.trigger.observe(viewLifecycleOwner){
+            viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            //    it.collect()
+            }
+        }
+
+        // Способ 3
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            viewModel.getDataSimple()
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            viewModel.items.catch {
+                Toast.makeText(context, it.message.toString(), Toast.LENGTH_SHORT).show()
+            }.collect { flowList ->
+                flowList.collect { list ->
+                    itemsAdapter.submitList(list)
+                }
+            }
+        }
+
 
         viewModel.msg.observe(viewLifecycleOwner) { msg ->
             Toast.makeText(context, getString(msg), Toast.LENGTH_SHORT).show()
@@ -66,7 +97,7 @@ class ItemsFragment : Fragment(), ItemListener {
         }
 
         viewModel.error.observe(viewLifecycleOwner){
-            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+           Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -8,6 +8,8 @@ import com.example.androidproject.R
 import com.example.androidproject.domain.items.ItemsInteractor
 import com.example.androidproject.domain.model.ItemsModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,8 +19,15 @@ class ItemsViewModel @Inject constructor(
 ) : ViewModel(
 ) {
 
-    private val _items = MutableLiveData<List<ItemsModel>>()
-    val items: LiveData<List<ItemsModel>> = _items
+    val items = flow<Flow<List<ItemsModel>>> { emit(itemsInteractor.showData()) }
+    val getData = flow { emit(itemsInteractor.getData()) }
+
+//    private val _items = MutableLiveData<List<ItemsModel>>()
+//    val items: LiveData<List<ItemsModel>> = _items
+
+    private val _trigger = MutableLiveData<Flow<Unit>>()
+    val trigger = _trigger
+
 
     private val _msg = MutableLiveData<Int>()
     val msg: LiveData<Int> = _msg
@@ -29,17 +38,36 @@ class ItemsViewModel @Inject constructor(
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> = _error
 
-    fun getData() {
+    fun getData(){
         viewModelScope.launch {
-            try {
-                itemsInteractor.getData()
-                val listItems = itemsInteractor.showData()
-                _items.value = listItems
-            } catch (e: Exception) {
-                _error.value = e.message.toString()
-            }
+            _trigger.value = flow { emit(itemsInteractor.getData()) }
         }
     }
+
+//    fun getData() {
+//        viewModelScope.launch {
+//            try {
+//                itemsInteractor.getData()
+//            } catch (e: Exception) {
+//                _error.value = e.message.toString()
+//            }
+//        }
+//        viewModelScope.launch {
+//            try {
+//                val listItems = itemsInteractor.showData()
+//                listItems.collect{
+//                    _items.value = it
+//                }
+//            } catch (e: Exception) {
+//                _error.value = e.message.toString()
+//            }
+//        }
+
+    suspend fun getDataSimple(){
+        itemsInteractor.getData()
+    }
+
+
 
     fun imageViewClicked() {
         _msg.value = R.string.imageview_clicked
@@ -52,13 +80,13 @@ class ItemsViewModel @Inject constructor(
         )
     }
 
-    fun deleteItem(description: String){
+    fun deleteItem(description: String) {
         viewModelScope.launch {
             itemsInteractor.deleteItemByDescription(description)
         }
     }
 
-    fun onFavClicked(description: String){
+    fun onFavClicked(description: String) {
         viewModelScope.launch {
             itemsInteractor.onFavClicked(description)
         }
@@ -74,6 +102,7 @@ data class NavigateWithBundel(
     val image: String,
     val destinationId: Int
 )
+
 
 
 

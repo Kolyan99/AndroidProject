@@ -9,6 +9,7 @@ import androidx.room.Query
 import com.example.androidproject.data.dataBase.FavoritesEntity
 import com.example.androidproject.data.dataBase.ItemsEntity
 import com.example.androidproject.domain.model.ItemsModel
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ItemsDao {
@@ -17,10 +18,10 @@ interface ItemsDao {
     fun insertItemsEntity(itemsEntity: ItemsEntity)
 
     @Query("SELECT * From ItemsEntity")
-    fun getItemsEntities(): List<ItemsEntity>
+    fun getItemsEntities(): Flow<List<ItemsEntity>>
 
     @Query("SELECT(SELECT COUNT(*) FROM ItemsEntity) !=0")
-    fun doesItemsEntityExist():Boolean
+    fun doesItemsEntityExist(): Flow<Boolean>
 
     @Query("DELETE FROM ItemsEntity WHERE description =:description ")
     fun deleteItemEntityByDescription(description: String)

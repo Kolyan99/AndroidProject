@@ -40,7 +40,6 @@ class ItemsViewHolder(
             itemsListener.onElementSelected(
                 itemsModel.description,
                 "itemsModel.date",
-
             )
         }
         deleteView.setOnClickListener {
@@ -50,10 +49,6 @@ class ItemsViewHolder(
         fav.setOnClickListener {
             itemsListener.onFavClicked(itemsModel.description)
         }
-
-
-
-
 
     }
 }

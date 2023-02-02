@@ -1,5 +1,6 @@
 package com.example.androidproject.presentation.view.view.auth.home.items
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import com.example.androidproject.databinding.FragmentSearchBinding
+import com.example.androidproject.presentation.view.view.auth.home.items.service.MusicPlayer
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,8 +30,21 @@ class SearchFragment : Fragment() {
         return binding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+
+
+        binding.btnStart.setOnClickListener {
+            requireActivity().startForegroundService(Intent(requireContext(),MusicPlayer::class.java))
+
+        }
+
+
+        binding.btnStop.setOnClickListener {
+            requireActivity().stopService(Intent(requireContext(),MusicPlayer::class.java))
+
+
+        }
 
         binding.search.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String?): Boolean {
