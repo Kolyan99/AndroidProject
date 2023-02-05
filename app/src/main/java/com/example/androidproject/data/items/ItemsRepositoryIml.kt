@@ -1,5 +1,6 @@
 package com.example.androidproject.data.items
 
+import android.annotation.SuppressLint
 import android.util.Log
 import com.example.androidproject.data.dataBase.Dao.ItemsDao
 import com.example.androidproject.data.dataBase.FavoritesEntity
@@ -26,9 +27,9 @@ class ItemsRepositoryIml @Inject constructor(
 
 
     override suspend fun getData() {
-        return withContext(Dispatchers.IO) {
-            itemsDao.doesItemsEntityExist().collect {
-                if (!it) {
+         withContext(Dispatchers.IO) {
+            val itemsExsists = itemsDao.doesItemsEntityExist()
+                if (!itemsExsists) {
                     val response = apiService.getData()
                     Log.w("data", response.body()?.sampleList.toString())
                     response.body()?.sampleList?.let {
@@ -42,7 +43,7 @@ class ItemsRepositoryIml @Inject constructor(
                 }
             }
         }
-    }
+
 
     override suspend fun showData(): Flow<List<ItemsModel>> {
         return withContext(Dispatchers.IO) {

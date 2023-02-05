@@ -20,13 +20,10 @@ class ItemsViewModel @Inject constructor(
 ) {
 
     val items = flow<Flow<List<ItemsModel>>> { emit(itemsInteractor.showData()) }
-    val getData = flow { emit(itemsInteractor.getData()) }
+
 
 //    private val _items = MutableLiveData<List<ItemsModel>>()
 //    val items: LiveData<List<ItemsModel>> = _items
-
-    private val _trigger = MutableLiveData<Flow<Unit>>()
-    val trigger = _trigger
 
 
     private val _msg = MutableLiveData<Int>()
@@ -38,11 +35,7 @@ class ItemsViewModel @Inject constructor(
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> = _error
 
-    fun getData(){
-        viewModelScope.launch {
-            _trigger.value = flow { emit(itemsInteractor.getData()) }
-        }
-    }
+
 
 //    fun getData() {
 //        viewModelScope.launch {

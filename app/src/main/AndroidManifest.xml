@@ -37,6 +37,13 @@
         <service android:name=".presentation.view.view.auth.home.items.service.MusicPlayer"
             android:enabled="true"
             android:exported="true"/>
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            tools:node="remove">
+
+        </provider>
     </application>
 
 </manifest>
