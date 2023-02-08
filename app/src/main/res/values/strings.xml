@@ -18,4 +18,5 @@
     <string name="favorite">Favorite</string>
     <string name="start_music">Start music</string>
     <string name="stop_music">Stop music</string>
+    <string name="open_new_activity">Open new Activity</string>
 </resources>

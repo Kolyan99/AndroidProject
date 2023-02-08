@@ -45,7 +45,8 @@ class DetailsFragment : Fragment() {
         }
 
         binding.btnLogout.setOnClickListener {
-            viewModel.logoutUser()
+            binding.btnLogout.isPressed = !it.isPressed
+         //   viewModel.logoutUser()
         }
 
         viewModel.nav.observe(viewLifecycleOwner) {

@@ -56,7 +56,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/ic_add_fav"
+            android:background="@drawable/favorit_selectew_background"
             app:layout_constraintEnd_toStartOf="@+id/delete"
             app:layout_constraintHorizontal_bias="0.581"
             app:layout_constraintStart_toEndOf="@+id/tv_name"
