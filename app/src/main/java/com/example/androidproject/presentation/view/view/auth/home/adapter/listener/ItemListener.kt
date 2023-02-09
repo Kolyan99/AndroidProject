@@ -11,5 +11,5 @@ interface ItemListener {
 
     fun onDeleteClicked(description: String)
 
-    fun onFavClicked(description: String)
+    fun onFavClicked(description: String, isFavorite: Boolean)
 }

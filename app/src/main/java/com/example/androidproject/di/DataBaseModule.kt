@@ -5,11 +5,8 @@ import com.example.androidproject.data.dataBase.Dao.ItemsDao
 import com.example.androidproject.data.dataBase.Dao.ItemsDatabase
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 
 @Module
-@InstallIn(SingletonComponent::class)
 class DataBaseModule {
 
     @Provides

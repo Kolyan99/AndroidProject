@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.androidproject.databinding.FragmentOnboardingBinding
 import com.example.androidproject.utils.NavHelp.navigateWithDeleteBackStack
-import dagger.hilt.android.AndroidEntryPoint
 
 
 class OnBoardingFragment : Fragment() {

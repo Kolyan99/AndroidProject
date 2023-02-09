@@ -6,7 +6,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidproject.R
-import com.example.androidproject.databinding.ItemsFruitBinding
 import com.example.androidproject.domain.model.ItemsModel
 import com.example.androidproject.presentation.view.view.auth.home.adapter.listener.ItemListener
 import com.squareup.picasso.Picasso
@@ -46,9 +45,11 @@ class ItemsViewHolder(
             itemsListener.onDeleteClicked(itemsModel.description)
         }
 
+        fav.isSelected = itemsModel.isFavorite
+
         fav.setOnClickListener {
             fav.isSelected = !it.isSelected
-            itemsListener.onFavClicked(itemsModel.description)
+            itemsListener.onFavClicked(itemsModel.description, it.isSelected)
         }
 
     }

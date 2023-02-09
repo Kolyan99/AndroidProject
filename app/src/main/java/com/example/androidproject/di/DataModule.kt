@@ -2,25 +2,21 @@ package com.example.androidproject.di
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
-import com.example.androidproject.data.service.ApiService
-import com.example.androidproject.data.service.ApiServiceSecond
 import com.example.androidproject.data.auth.AuthRepositoryImpl
 import com.example.androidproject.data.items.ItemsRepositoryIml
+import com.example.androidproject.data.service.ApiService
+import com.example.androidproject.data.service.ApiServiceSecond
+import com.example.androidproject.data.sharedpreferances.SharedPreferencesHelper
 import com.example.androidproject.domain.auth.AuthRepository
 import com.example.androidproject.domain.items.ItemsRepository
-import com.example.androidproject.data.sharedpreferances.SharedPreferencesHelper
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 
 @Module
-@InstallIn(SingletonComponent::class)
 abstract class DataModule {
 
 
@@ -45,7 +41,7 @@ abstract class DataModule {
 
         @Provides
         fun provideSharedPreferences(
-            @ApplicationContext context: Context):SharedPreferencesHelper{
+            context: Context):SharedPreferencesHelper{
             return SharedPreferencesHelper(
                 context.getSharedPreferences(SP_KEY, MODE_PRIVATE)
             )

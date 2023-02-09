@@ -5,25 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.androidproject.App
 import com.example.androidproject.R
 import com.example.androidproject.presentation.view.view.auth.home.adapter.ItemsAdapter
 import com.example.androidproject.presentation.view.view.auth.home.adapter.listener.ItemListener
+import com.example.androidproject.utils.BaseFragment
 import com.example.androidproject.utils.BundelConstants.description
 import com.example.androidproject.utils.BundelConstants.image
 import com.example.androidproject.utils.NavHelp.navigateWithBundle
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.catch
 
-@AndroidEntryPoint
-class ItemsFragment : Fragment(), ItemListener {
+
+class ItemsFragment : BaseFragment(), ItemListener {
 
     private lateinit var itemsAdapter: ItemsAdapter
-    private val viewModel: ItemsViewModel by viewModels()
+
+    private val viewModel: ItemsViewModel by viewModels{viewModelFactory}
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +35,8 @@ class ItemsFragment : Fragment(), ItemListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (requireActivity().applicationContext as App).provideAppComponent().inject(this)
 
 
         itemsAdapter = ItemsAdapter(this)
@@ -113,8 +116,8 @@ class ItemsFragment : Fragment(), ItemListener {
         viewModel.deleteItem(description)
     }
 
-    override fun onFavClicked(description: String) {
-        viewModel.onFavClicked(description)
+    override fun onFavClicked(description: String, isFavorite: Boolean) {
+        viewModel.onFavClicked(description, isFavorite)
     }
 
 

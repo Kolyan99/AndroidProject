@@ -7,13 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.androidproject.R
 import com.example.androidproject.domain.items.ItemsInteractor
 import com.example.androidproject.domain.model.ItemsModel
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
+
 class ItemsViewModel @Inject constructor(
     private val itemsInteractor: ItemsInteractor
 ) : ViewModel(
@@ -86,9 +85,9 @@ class ItemsViewModel @Inject constructor(
         }
     }
 
-    fun onFavClicked(description: String) {
+    fun onFavClicked(description: String, isFavorite: Boolean) {
         viewModelScope.launch {
-            itemsInteractor.onFavClicked(description)
+            itemsInteractor.onFavClicked(description, isFavorite)
         }
     }
 

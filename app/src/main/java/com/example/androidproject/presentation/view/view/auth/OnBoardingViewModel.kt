@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.androidproject.R
-import dagger.hilt.android.lifecycle.HiltViewModel
 
 
 class OnBoardingViewModel : ViewModel() {

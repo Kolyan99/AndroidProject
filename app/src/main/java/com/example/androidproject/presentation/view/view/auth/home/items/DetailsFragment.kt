@@ -7,21 +7,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.androidproject.App
 import com.example.androidproject.R
 import com.example.androidproject.databinding.FragmentDetailsBinding
+import com.example.androidproject.utils.BaseFragment
 import com.example.androidproject.utils.BundelConstants.description
 import com.example.androidproject.utils.BundelConstants.image
 import com.squareup.picasso.Picasso
-import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-@AndroidEntryPoint
-class DetailsFragment : Fragment() {
+
+class DetailsFragment : BaseFragment() {
 
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: DetailsViewModel by viewModels()
+    private val viewModel: DetailsViewModel by viewModels{viewModelFactory}
 
 
     override fun onCreateView(
@@ -34,6 +37,8 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (requireActivity().applicationContext as App).provideAppComponent().inject(this)
 
         val bundel = arguments
         bundel?.let { safeBundlt ->

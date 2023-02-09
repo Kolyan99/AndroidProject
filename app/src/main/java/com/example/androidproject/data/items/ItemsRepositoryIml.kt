@@ -49,7 +49,7 @@ class ItemsRepositoryIml @Inject constructor(
             val itemsEntity = itemsDao.getItemsEntities()
             itemsEntity.map { itemsList ->
                 itemsList.map { item ->
-                    ItemsModel(item.description, item.imageUrl)
+                    ItemsModel(item.id, item.description, item.imageUrl, item.isFavorite?: false)
                 }
             }
         }
@@ -65,13 +65,18 @@ class ItemsRepositoryIml @Inject constructor(
     override suspend fun findItemByDescription(searchText: String): ItemsModel {
         return withContext(Dispatchers.IO){
             val itemsEntity = itemsDao.findItemEntityByDescription(searchText)
-            ItemsModel(itemsEntity.description, itemsEntity.imageUrl)
+            ItemsModel(itemsEntity.id, itemsEntity.description, itemsEntity.imageUrl, itemsEntity.isFavorite?: false)
         }
     }
 
-    override suspend fun favClicked(itemsModel: ItemsModel) {
+    override suspend fun favClicked(itemsModel: ItemsModel, isFavorite: Boolean) {
         return withContext(Dispatchers.IO){
-            itemsDao.insertFavoritesEntity(FavoritesEntity(Random.nextInt(),
+            itemsDao.addToFavorite(
+                itemsModel.description,
+                isFavorite
+            )
+
+            itemsDao.insertFavoritesEntity(FavoritesEntity(itemsModel.id,
                 itemsModel.description,
                 itemsModel.image)
             )
