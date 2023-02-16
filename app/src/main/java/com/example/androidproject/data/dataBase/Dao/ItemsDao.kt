@@ -1,14 +1,12 @@
 package com.example.androidproject.data.dataBase.Dao
 
-import android.content.ClipDescription
 import androidx.room.Dao
 import androidx.room.Ignore
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy.IGNORE
+import androidx.room.OnConflictStrategy.Companion.IGNORE
 import androidx.room.Query
 import com.example.androidproject.data.dataBase.FavoritesEntity
 import com.example.androidproject.data.dataBase.ItemsEntity
-import com.example.androidproject.domain.model.ItemsModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao
