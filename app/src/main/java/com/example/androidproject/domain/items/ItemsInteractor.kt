@@ -2,6 +2,8 @@ package com.example.androidproject.domain.items
 
 import com.example.androidproject.domain.model.FavoritesModel
 import com.example.androidproject.domain.model.ItemsModel
+import io.reactivex.Completable
+import io.reactivex.Observable
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -9,11 +11,11 @@ class ItemsInteractor @Inject constructor(
     private val itemsRepository: ItemsRepository
 ) {
 
-    suspend fun getData(){
+     fun getData(): Completable{
         return itemsRepository.getData()
     }
 
-    suspend fun showData(): Flow<List<ItemsModel>>{
+     fun showData(): Observable<List<ItemsModel>>{
         return itemsRepository.showData()
     }
 

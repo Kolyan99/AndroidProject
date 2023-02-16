@@ -3,13 +3,15 @@ package com.example.androidproject.domain.items
 import android.content.ClipDescription
 import com.example.androidproject.domain.model.FavoritesModel
 import com.example.androidproject.domain.model.ItemsModel
+import io.reactivex.Completable
+import io.reactivex.Observable
 import kotlinx.coroutines.flow.Flow
 
 interface ItemsRepository {
 
-   suspend fun getData()
+    fun getData(): Completable
 
-   suspend fun showData(): Flow<List<ItemsModel>>
+    fun showData(): Observable<List<ItemsModel>>
 
    suspend fun deleteItemByDescription(description: String)
 

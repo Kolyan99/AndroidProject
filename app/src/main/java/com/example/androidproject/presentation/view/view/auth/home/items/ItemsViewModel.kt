@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.androidproject.R
 import com.example.androidproject.domain.items.ItemsInteractor
 import com.example.androidproject.domain.model.ItemsModel
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
@@ -18,11 +19,9 @@ class ItemsViewModel @Inject constructor(
 ) : ViewModel(
 ) {
 
-    val items = flow<Flow<List<ItemsModel>>> { emit(itemsInteractor.showData()) }
-    val getData = flow { emit(itemsInteractor.getData()) }
 
-//    private val _items = MutableLiveData<List<ItemsModel>>()
-//    val items: LiveData<List<ItemsModel>> = _items
+    private val _items = MutableLiveData<List<ItemsModel>>()
+    val items: LiveData<List<ItemsModel>> = _items
 
     private val _trigger = MutableLiveData<Flow<Unit>>()
     val trigger = _trigger
@@ -37,10 +36,23 @@ class ItemsViewModel @Inject constructor(
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> = _error
 
+    private val compositeDisposable = CompositeDisposable()
+
+
     fun getData(){
-        viewModelScope.launch {
-            _trigger.value = flow { emit(itemsInteractor.getData()) }
-        }
+       val getData = itemsInteractor.getData().subscribe({
+
+        }, {
+
+        })
+        compositeDisposable.add(getData)
+
+       val showData = itemsInteractor.showData().subscribe({
+            _items.value = it
+        },{
+            _error.value = "Error occured while showing data"
+        })
+        compositeDisposable.add(showData)
     }
 
 //    fun getData() {
@@ -61,6 +73,7 @@ class ItemsViewModel @Inject constructor(
 //                _error.value = e.message.toString()
 //            }
 //        }
+
 
     suspend fun getDataSimple(){
         itemsInteractor.getData()
@@ -93,6 +106,11 @@ class ItemsViewModel @Inject constructor(
 
     fun userNavigated() {
         _bundle.value = null
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.dispose()
     }
 }
 

@@ -68,14 +68,20 @@ class ItemsFragment : BaseFragment(), ItemListener {
             viewModel.getDataSimple()
         }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            viewModel.items.catch {
-                Toast.makeText(context, it.message.toString(), Toast.LENGTH_SHORT).show()
-            }.collect { flowList ->
-                flowList.collect { list ->
-                    itemsAdapter.submitList(list)
-                }
-            }
+//        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+//            viewModel.items.catch {
+//                Toast.makeText(context, it.message.toString(), Toast.LENGTH_SHORT).show()
+//            }.collect { flowList ->
+//                flowList.collect { list ->
+//                    itemsAdapter.submitList(list)
+//                }
+//            }
+//        }
+
+        viewModel.getData()
+
+        viewModel.items.observe(viewLifecycleOwner){
+            itemsAdapter.submitList(it)
         }
 
 
@@ -119,6 +125,4 @@ class ItemsFragment : BaseFragment(), ItemListener {
     override fun onFavClicked(description: String, isFavorite: Boolean) {
         viewModel.onFavClicked(description, isFavorite)
     }
-
-
 }

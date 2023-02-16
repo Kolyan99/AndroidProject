@@ -9,6 +9,12 @@ import com.example.androidproject.data.service.ApiServiceSecond
 import com.example.androidproject.domain.items.ItemsRepository
 import com.example.androidproject.domain.model.FavoritesModel
 import com.example.androidproject.domain.model.ItemsModel
+import io.reactivex.Completable
+import io.reactivex.Observable
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
@@ -19,41 +25,51 @@ import javax.inject.Named
 import kotlin.random.Random
 
 class ItemsRepositoryIml @Inject constructor(
-   @Named("FIRST") private val apiService: ApiService,
-   @Named("SECOND") private val apiServiceSecond: ApiServiceSecond,
-   private val itemsDao: ItemsDao
-): ItemsRepository {
+    @Named("FIRST") private val apiService: ApiService,
+    @Named("SECOND") private val apiServiceSecond: ApiServiceSecond,
+    private val itemsDao: ItemsDao
+) : ItemsRepository {
 
+    private val compositeDisposable = CompositeDisposable()
 
-    override suspend fun getData() {
-        return withContext(Dispatchers.IO) {
-            itemsDao.doesItemsEntityExist().collect {
-                if (!it) {
-                    val response = apiService.getData()
-                    Log.w("data", response.body()?.sampleList.toString())
-                    response.body()?.sampleList?.let {
-                        it.map {
-                            val itemsEntity =
-                                ItemsEntity(Random.nextInt(), it.description, it.imageUrl)
-                            itemsDao.insertItemsEntity(itemsEntity)
-
-                        }
+    override fun getData(): Completable {
+           return itemsDao.doesItemsEntityExist()
+                .subscribeOn(Schedulers.io())
+                .doAfterNext {
+                    if (!it) {
+                        val response = apiService.getData()
+                        val getData = response.subscribeOn(Schedulers.io())
+                            .doAfterSuccess {
+                                it.sampleList.map {
+                                    val itemsEntity =
+                                        ItemsEntity(Random.nextInt(), it.description, it.imageUrl)
+                                    itemsDao.insertItemsEntity(itemsEntity)
+                                }
+                            }
+                            .doOnError {
+                                Log.w("error", "when making request")
+                            }
+                            .ignoreElement()
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe()
+                        compositeDisposable.add(getData)
                     }
                 }
-            }
+               .ignoreElements()
+               .observeOn(AndroidSchedulers.mainThread())
         }
-    }
 
-    override suspend fun showData(): Flow<List<ItemsModel>> {
-        return withContext(Dispatchers.IO) {
-            val itemsEntity = itemsDao.getItemsEntities()
-            itemsEntity.map { itemsList ->
-                itemsList.map { item ->
-                    ItemsModel(item.id, item.description, item.imageUrl, item.isFavorite?: false)
+    override fun showData(): Observable<List<ItemsModel>> {
+        val itemsEntity = itemsDao.getItemsEntities()
+        return itemsEntity.subscribeOn(Schedulers.io())
+            .map {
+                it.map {
+                    ItemsModel(it.id, it.description, it.imageUrl, it.isFavorite ?: false)
                 }
             }
-        }
+            .observeOn(AndroidSchedulers.mainThread())
     }
+
 
     override suspend fun deleteItemByDescription(description: String) {
         withContext(Dispatchers.IO) {
@@ -63,28 +79,36 @@ class ItemsRepositoryIml @Inject constructor(
 
 
     override suspend fun findItemByDescription(searchText: String): ItemsModel {
-        return withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO) {
             val itemsEntity = itemsDao.findItemEntityByDescription(searchText)
-            ItemsModel(itemsEntity.id, itemsEntity.description, itemsEntity.imageUrl, itemsEntity.isFavorite?: false)
+            ItemsModel(
+                itemsEntity.id,
+                itemsEntity.description,
+                itemsEntity.imageUrl,
+                itemsEntity.isFavorite ?: false
+            )
         }
     }
 
     override suspend fun favClicked(itemsModel: ItemsModel, isFavorite: Boolean) {
-        return withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO) {
             itemsDao.addToFavorite(
                 itemsModel.description,
                 isFavorite
             )
 
-            itemsDao.insertFavoritesEntity(FavoritesEntity(itemsModel.id,
-                itemsModel.description,
-                itemsModel.image)
+            itemsDao.insertFavoritesEntity(
+                FavoritesEntity(
+                    itemsModel.id,
+                    itemsModel.description,
+                    itemsModel.image
+                )
             )
         }
     }
 
     override suspend fun getFavorites(): List<FavoritesModel> {
-        return withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO) {
             val favoritesEntity = itemsDao.getFavoritesEntities()
             favoritesEntity.map {
                 FavoritesModel(it.description, it.imageUrl)
