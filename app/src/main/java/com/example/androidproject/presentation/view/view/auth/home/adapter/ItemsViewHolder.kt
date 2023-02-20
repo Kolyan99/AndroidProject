@@ -35,7 +35,7 @@ class ItemsViewHolder(
             itemsModel.image
         }
 
-        imageView.setOnClickListener {
+        itemView.setOnClickListener {
             itemsListener.onElementSelected(
                 itemsModel.description,
                 "itemsModel.date",

@@ -1,5 +1,7 @@
 package com.example.androidproject.presentation.view.view.auth.home.items
 
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidproject.App
 import com.example.androidproject.databinding.FragmentFavoritesBinding
 import com.example.androidproject.presentation.view.view.auth.home.items.adapter.FavoritesAdapter
+import com.example.androidproject.presentation.view.view.reciver.AirplaneModeChangeReceiver
+import com.example.androidproject.presentation.view.view.reciver.MyBroadcastReceiver
 import com.example.androidproject.utils.BaseFragment
 import javax.inject.Inject
 
@@ -36,6 +40,21 @@ class FavoritesFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+       val receiver = AirplaneModeChangeReceiver()
+        IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED).also {
+            requireContext().registerReceiver(receiver, it)
+        }
+
+       val receiver2 = MyBroadcastReceiver()
+        IntentFilter("MY_ACTION").also {
+            requireContext().registerReceiver(receiver2, it)
+        }
+
+        setMessage()
+
+
+
         (requireActivity().applicationContext as App).provideAppComponent().inject(this)
 
         favAdapter = FavoritesAdapter()
@@ -49,5 +68,11 @@ class FavoritesFragment : BaseFragment() {
         }
 
     }
+    private fun setMessage(){
+        val intent = Intent("MY_ACTION")
+        intent.putExtra("KEY", "message")
+        requireContext().sendBroadcast(intent)
+    }
+
 
 }

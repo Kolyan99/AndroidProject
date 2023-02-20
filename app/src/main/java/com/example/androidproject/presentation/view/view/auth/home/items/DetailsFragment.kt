@@ -45,6 +45,7 @@ class DetailsFragment : BaseFragment() {
             val name = safeBundlt.getString(description)
             val date = safeBundlt.getString(image)
 
+
             binding.detailsName.text = description
             Picasso.get().load(Uri.parse(image)).into(binding.detailsImage)
         }
