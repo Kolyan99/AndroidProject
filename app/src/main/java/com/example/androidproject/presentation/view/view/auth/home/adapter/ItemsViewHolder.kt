@@ -23,6 +23,7 @@ class ItemsViewHolder(
         val fav = view.findViewById<ImageView>(R.id.btnFav)
 
 
+
         Picasso.get().load(Uri.parse(itemsModel.image)).into(imageView)
 
 

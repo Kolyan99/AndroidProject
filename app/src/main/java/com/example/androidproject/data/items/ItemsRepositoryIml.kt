@@ -27,8 +27,8 @@ class ItemsRepositoryIml @Inject constructor(
 
     override suspend fun getData() {
         return withContext(Dispatchers.IO) {
-            itemsDao.doesItemsEntityExist().collect {
-                if (!it) {
+           val itemExist = itemsDao.doesItemsEntityExist()
+                if (!itemExist) {
                     val response = apiService.getData()
                     Log.w("data", response.body()?.sampleList.toString())
                     response.body()?.sampleList?.let {
@@ -42,18 +42,17 @@ class ItemsRepositoryIml @Inject constructor(
                 }
             }
         }
-    }
 
-    override suspend fun showData(): Flow<List<ItemsModel>> {
+
+    override suspend fun showData(): List<ItemsModel> {
         return withContext(Dispatchers.IO) {
             val itemsEntity = itemsDao.getItemsEntities()
-            itemsEntity.map { itemsList ->
-                itemsList.map { item ->
+            itemsEntity.map { item ->
                     ItemsModel(item.description, item.imageUrl)
                 }
             }
         }
-    }
+
 
     override suspend fun deleteItemByDescription(description: String) {
         withContext(Dispatchers.IO) {

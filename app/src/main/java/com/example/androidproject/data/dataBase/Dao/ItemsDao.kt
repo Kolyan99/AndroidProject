@@ -18,10 +18,10 @@ interface ItemsDao {
     fun insertItemsEntity(itemsEntity: ItemsEntity)
 
     @Query("SELECT * From ItemsEntity")
-    fun getItemsEntities(): Flow<List<ItemsEntity>>
+    fun getItemsEntities(): List<ItemsEntity>
 
     @Query("SELECT(SELECT COUNT(*) FROM ItemsEntity) !=0")
-    fun doesItemsEntityExist(): Flow<Boolean>
+    fun doesItemsEntityExist(): Boolean
 
     @Query("DELETE FROM ItemsEntity WHERE description =:description ")
     fun deleteItemEntityByDescription(description: String)
